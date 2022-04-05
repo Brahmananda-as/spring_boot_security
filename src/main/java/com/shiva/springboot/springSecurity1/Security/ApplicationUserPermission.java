@@ -7,6 +7,8 @@ public enum ApplicationUserPermission {
     COURSE_READ("course:read"),
     COURSE_WRITE("course:write");
 
+
+
     private String permissions;
 
 
@@ -15,6 +17,12 @@ public enum ApplicationUserPermission {
 
         this.permissions = permissions;
     }
+
+
+    public String getPermissions() {
+        return permissions;
+    }
+
 
 
 
