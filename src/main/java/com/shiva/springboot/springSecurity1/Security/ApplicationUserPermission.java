@@ -20,7 +20,8 @@ public enum ApplicationUserPermission {
 
 
     public String getPermissions() {
-        return permissions;
+
+         return permissions;
     }
 
 
