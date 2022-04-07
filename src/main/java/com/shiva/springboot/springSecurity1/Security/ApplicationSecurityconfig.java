@@ -12,13 +12,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import static com.shiva.springboot.springSecurity1.Security.ApplicationUserRoles.*;
+
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityconfig extends WebSecurityConfigurerAdapter {
 
 
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public ApplicationSecurityconfig(PasswordEncoder passwordEncoder){
@@ -34,6 +36,8 @@ public class ApplicationSecurityconfig extends WebSecurityConfigurerAdapter {
                 .authorizeHttpRequests()
                 .antMatchers("/","index")
                 .permitAll()
+                .antMatchers("/api/**").hasRole(STUDENT.name())
+                .antMatchers("/management/**").hasRole(ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -47,10 +51,22 @@ public class ApplicationSecurityconfig extends WebSecurityConfigurerAdapter {
         UserDetails shiva = User.builder()
                 .username("shiva")
                 .password(passwordEncoder.encode("test"))
-                .roles("STUDENT")
+                .roles(STUDENT.name())
                 .build();
 
-        return new  InMemoryUserDetailsManager(shiva);
+        UserDetails parvathi = User.builder()
+                .username("parvathi")
+                .password(passwordEncoder.encode("test"))
+                .roles(ADMIN.name())
+                .build();
+//
+//        UserDetails gayathri = User.builder()
+//                .username("gayathri")
+//                .password(passwordEncoder.encode("test"))
+//                .roles(ADMINTRAINEE.name())
+//                .build();
+
+        return new  InMemoryUserDetailsManager(shiva,parvathi);
 
     }
 }
