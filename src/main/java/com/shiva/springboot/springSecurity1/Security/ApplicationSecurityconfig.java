@@ -40,19 +40,22 @@ public class ApplicationSecurityconfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf().disable()
-                .authorizeHttpRequests()
-                .antMatchers("/","index")
-                .permitAll()
+//                .authorizeHttpRequests()
+                .authorizeRequests()
+                .antMatchers("/","index").permitAll()
                 .antMatchers("/api/**").hasRole(STUDENT.name())
 //                .antMatchers("/management/**").hasRole(ADMIN.name())
 //                .antMatchers(HttpMethod.DELETE,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermissions())
-//                .antMatchers(HttpMethod.POST,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermissions())
+//                .antMatchers(HttpMethod.POST,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermissions())    //  we have used annotations for this lines
 //                .antMatchers(HttpMethod.PUT,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermissions())
 //                .antMatchers(HttpMethod.GET,"/management/api/**").hasAnyRole(STUDENT.name(),ADMIN.name(),ADMINTRAINEE.name())
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+//                .httpBasic();
+                .formLogin()
+                .loginPage("/login").permitAll();
+
     }
 
     @Override
