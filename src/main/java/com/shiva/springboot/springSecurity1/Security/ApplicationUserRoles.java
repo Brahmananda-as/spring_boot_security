@@ -34,7 +34,7 @@ public enum ApplicationUserRoles {
 
             ).collect(Collectors.toSet());
 
-        authorities.add(new SimpleGrantedAuthority("ROLE"+this.name()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+this.name()));
         return  authorities;
 
     }

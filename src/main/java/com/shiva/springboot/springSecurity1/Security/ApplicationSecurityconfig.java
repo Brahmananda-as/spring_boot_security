@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,10 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import static com.shiva.springboot.springSecurity1.Security.ApplicationUserPermission.COURSE_WRITE;
+import static com.shiva.springboot.springSecurity1.Security.ApplicationUserPermission.STUDENT_READ;
 import static com.shiva.springboot.springSecurity1.Security.ApplicationUserRoles.*;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityconfig extends WebSecurityConfigurerAdapter {
 
 
@@ -42,10 +45,10 @@ public class ApplicationSecurityconfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/api/**").hasRole(STUDENT.name())
 //                .antMatchers("/management/**").hasRole(ADMIN.name())
-                .antMatchers(HttpMethod.DELETE,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermissions())
-                .antMatchers(HttpMethod.POST,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermissions())
-                .antMatchers(HttpMethod.PUT,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermissions())
-                .antMatchers(HttpMethod.GET,"/management/api/**").hasAnyRole(ADMIN.name(),ADMINTRAINEE.name(), STUDENT.name())
+//                .antMatchers(HttpMethod.DELETE,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermissions())
+//                .antMatchers(HttpMethod.POST,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermissions())
+//                .antMatchers(HttpMethod.PUT,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermissions())
+//                .antMatchers(HttpMethod.GET,"/management/api/**").hasAnyRole(STUDENT.name(),ADMIN.name(),ADMINTRAINEE.name())
                 .anyRequest()
                 .authenticated()
                 .and()
